@@ -1,6 +1,7 @@
 # ds4300-practical2
-Practical 2 for DS4300: Team ctrl+tab+delete
-Team members: Cathreen Paul, Thillai Sudhakar, Diya Kadakia
+Practical 2 for DS4300: Team ctrl+tab+delete \
+Team members: 
+<a href="https://github.com/cathreenpaul">Cathreen Paul</a>, <a href="https://github.com/tsudhakar87">Thillai Sudhakar</a>, <a href="https://github.com/diyakadakia">Diya Kadakia</a>
 
 ### To execute this project:
 

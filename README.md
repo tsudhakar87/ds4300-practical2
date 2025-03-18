@@ -4,6 +4,8 @@ Team members:
 <a href="https://github.com/cathreenpaul">Cathreen Paul</a>, <a href="https://github.com/tsudhakar87">Thillai Sudhakar</a>, <a href="https://github.com/diyakadakia">Diya Kadakia</a>
 
 ### To execute this project:
+1. Run `pip install -r requirements.txt` to get all libraries necessary to run this project.
+
 Instructions to follow!
 
 ### Assignment Details

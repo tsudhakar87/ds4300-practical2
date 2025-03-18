@@ -1,3 +1,14 @@
+ # This file is in charge of user input to run pipelines and query the model.
+ # Since we the variables we want to test are:
+    # chunk size
+    # overlap
+    # text prep strategy
+    # embedding model
+    # database type
+    # local llm
+# the user will be able to input all of these to run a specific pipeline.
+# the runtime
+
 def read_input():
     """Reads in inputs to make the pipeline."""
     chunk_size = int(input("Enter chunk size: "))

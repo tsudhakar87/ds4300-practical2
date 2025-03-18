@@ -33,4 +33,15 @@ def clean_text(text_list):
 
         cleaned_text.append(text)
     
-    return cleaned_text 
+    return cleaned_text          
+  
+def save_cleaned_text(text_list, filename):
+
+    
+    cleaned_list = clean_text(text_list) 
+    cleaned_text = "\n".join(cleaned_list) 
+    
+    with open(filename, "w", encoding="utf-8") as file:
+        file.write(cleaned_text)  
+
+    return cleaned_text     

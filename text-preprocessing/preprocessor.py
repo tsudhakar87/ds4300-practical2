@@ -25,7 +25,6 @@ def clean_text(text_list):
     return cleaned_text
 
 def process_pdfs_in_folder(folder_path, output_filename):
-    """Extract, clean, and save text from multiple PDFs into one file."""
     all_cleaned_text = []
 
     for filename in os.listdir(folder_path):

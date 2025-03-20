@@ -7,7 +7,6 @@ import nltk
 from nltk.corpus import stopwords
 from PyPDF2 import PdfReader
 
-nltk.download('stopwords')
 stop_words = set(stopwords.words("english"))
 
 def extract_text_from_pdf(pdf_path):
@@ -22,6 +21,7 @@ def clean_text(text_list):
     for text in text_list:
         text = text.lower().strip() 
         text = text.translate(str.maketrans('', '', string.punctuation)) 
+        text = text.replace("●", "")
         words = text.split()
         cleaned_text.append(" ".join([word for word in words if word not in stop_words])) 
     
@@ -35,8 +35,9 @@ def process_pdfs_in_folder(folder_path, output_filename):
             pdf_path = os.path.join(folder_path, filename)
             extracted_text_list = extract_text_from_pdf(pdf_path) 
             cleaned_text_list = clean_text(extracted_text_list)  
+
             
-            all_cleaned_text.extend(cleaned_text_list)  
+            all_cleaned_text.extend(cleaned_text_list)    
 
     final_text = "\n".join(all_cleaned_text)  
 
@@ -46,7 +47,7 @@ def process_pdfs_in_folder(folder_path, output_filename):
     print("Processed text saved to:", output_filename)
     return final_text  
 
-
+ 
 folder_path = "class-materials/slides" 
 output_file = "cleaned_text.txt"
 

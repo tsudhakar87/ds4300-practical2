@@ -10,18 +10,31 @@ distributed data challenges consistency updates must propagated across network a
 vertical scaling shared memory architectures geographically centralized server fault tolerance via hotswappable components 4
 vertical scaling shared disk architectures machines connected via fast network contention overhead locking limit scalability highwrite volumes … ok data warehouse applications high read volumes 5
 aws ec2 pricing oct 2024 6 78000month httpsawsamazoncomec2pricingondemand
+<<<<<<< Updated upstream
 horizontal scaling shared nothing architectures ●each node cpu memory disk ●coordination via application layer using conventional network ●geographically distributed ●commodity hardware 7
+=======
+horizontal scaling shared nothing architectures node cpu memory disk coordination via application layer using conventional network geographically distributed commodity hardware 7
+>>>>>>> Stashed changes
 data replication vs partitioning 8 replicates data main partitions subset data
 replication 9
 common strategies replication single leader model multiple leader model leaderless model distributed databases usually adopt one strategies 10
 leaderbased replication writes clients go leader leader sends replication info followers followers process instructions leader clients read either leader followers 11
 leaderbased replication 12 write could sent one followers… leader
+<<<<<<< Updated upstream
 leaderbased replication common strategy relational ●mysql ●oracle ●sql server ●postgresql nosql ●mongodb ●rethinkdb realtime web apps ●espresso linkedin messaging brokers kafka rabbitmq 13
 replication info transmitted followers 14 replication method description statementbased send insert update deletes replica simple errorprone due nondeterministic functions like trigger sideeffects difﬁculty handling concurrent transactions writeahead log wal bytelevel speciﬁc log every change database leader followers must implement storage engine makes upgrades difﬁcult logical rowbased log relational dbs inserted rows modiﬁed rows deleted rows transaction log identify rows changed transaction changed logical logs decoupled storage engine easier parse triggerbased changes logged separate table whenever trigger ﬁres response insert update delete flexible application speciﬁc replication also error prone
 synchronous vs asynchronous replication synchronous leader waits response follower asynchronous leader doesn’t wait conﬁrmation 15 synchronous asynchronous
 happens leader fails challenges pick new leader node ●consensus strategy – perhaps based updates ●use controller node appoint new leader and… conﬁgure clients start writing new leader 16
 happens leader fails challenges ● asynchronous replication used new leader may writes recover lost writes simply discard ● old leader recovers avoid multiple leaders receiving conﬂicting data split brain way resolve conﬂicting requests ● leader failure detection optimal timeout tricky 17
 replication lag refers time takes writes leader reﬂected followers ●synchronous replication replication lag causes writes slower system brittle num followers increases ●asynchronous replication maintain availability cost delayed eventual consistency delay called inconsistency window replication lag 18
+=======
+leaderbased replication common strategy relational mysql oracle sql server postgresql nosql mongodb rethinkdb realtime web apps espresso linkedin messaging brokers kafka rabbitmq 13
+replication info transmitted followers 14 replication method description statementbased send insert update deletes replica simple errorprone due nondeterministic functions like trigger sideeffects difﬁculty handling concurrent transactions writeahead log wal bytelevel speciﬁc log every change database leader followers must implement storage engine makes upgrades difﬁcult logical rowbased log relational dbs inserted rows modiﬁed rows deleted rows transaction log identify rows changed transaction changed logical logs decoupled storage engine easier parse triggerbased changes logged separate table whenever trigger ﬁres response insert update delete flexible application speciﬁc replication also error prone
+synchronous vs asynchronous replication synchronous leader waits response follower asynchronous leader doesn’t wait conﬁrmation 15 synchronous asynchronous
+happens leader fails challenges pick new leader node consensus strategy – perhaps based updates use controller node appoint new leader and… conﬁgure clients start writing new leader 16
+happens leader fails challenges asynchronous replication used new leader may writes recover lost writes simply discard old leader recovers avoid multiple leaders receiving conﬂicting data split brain way resolve conﬂicting requests leader failure detection optimal timeout tricky 17
+replication lag refers time takes writes leader reﬂected followers synchronous replication replication lag causes writes slower system brittle num followers increases asynchronous replication maintain availability cost delayed eventual consistency delay called inconsistency window replication lag 18
+>>>>>>> Stashed changes
 readafterwrite consistency scenario you’re adding comment reddit post… click submit back main post comment show less important users see comment immediately 19
 implementing readafterwrite consistency method 1 modiﬁable data client’s perspective always read leader 20
 implementing readafterwrite consistency method 2 dynamically switch reading leader “recently updated” data example policy requests within one minute last update come leader 21
@@ -55,10 +68,17 @@ ds 4300 neo4j mark fontenot phd northeastern university material referenced grap
 neo4j graph database system supports transactional analytical processing graphbased data relatively new class nosql dbs considered schema optional one imposed supports various types indexing acid compliant supports distributed computing similar microsoft cosmodb amazon neptune 2
 neo4j query language plugins cypher neo4j’s graph query language created 2011 goal sql equivalent language graph databases provides visual way matching patterns relationships nodesconnecttoothernodes apoc plugin awesome procedures cypher addon library provides hundreds procedures functions graph data science plugin provides efﬁcient implementations common graph algorithms like ones talked yesterday 3
 neo4j docker compose 4
+<<<<<<< Updated upstream
 docker compose 5●supports multicontainer management ●setup declarative using yaml dockercomposeyaml ﬁle ○ services ○ volumes ○ networks etc ●1 command used start stop scale number services one time ●provides consistent method producing identical environment “well… works machine ●interaction mostly via command line
 dockercomposeyaml 6services neo4j containername neo4j image neo4jlatest ports 74747474 76877687 environment neo4jauthneo4jneo4jpassword neo4japocexportfileenabledtrue neo4japocimportfileenabledtrue neo4japocimportfileuseneo4jconfigtrue neo4jpluginsapoc graphdatascience volumes neo4jdbdatadata neo4jdblogslogs neo4jdbimportvarlibneo4jimport neo4jdbpluginsplugins never put “secrets” docker compose ﬁle use env ﬁles
 env files env ﬁles stores collection environment variables good way keep environment variables different platforms separate envlocal envdev envprod 7neo4jpasswordabc123 env file
 docker compose commands ●to test docker cli properly installed run docker version ●major docker commands ○docker compose ○docker compose ○docker compose ○docker compose start ○docker compose stop ○docker compose build ○docker compose build nocache 8
+=======
+docker compose 5supports multicontainer management setup declarative using yaml dockercomposeyaml ﬁle ○ services ○ volumes ○ networks etc 1 command used start stop scale number services one time provides consistent method producing identical environment “well… works machine interaction mostly via command line
+dockercomposeyaml 6services neo4j containername neo4j image neo4jlatest ports 74747474 76877687 environment neo4jauthneo4jneo4jpassword neo4japocexportfileenabledtrue neo4japocimportfileenabledtrue neo4japocimportfileuseneo4jconfigtrue neo4jpluginsapoc graphdatascience volumes neo4jdbdatadata neo4jdblogslogs neo4jdbimportvarlibneo4jimport neo4jdbpluginsplugins never put “secrets” docker compose ﬁle use env ﬁles
+env files env ﬁles stores collection environment variables good way keep environment variables different platforms separate envlocal envdev envprod 7neo4jpasswordabc123 env file
+docker compose commands test docker cli properly installed run docker version major docker commands ○docker compose ○docker compose ○docker compose ○docker compose start ○docker compose stop ○docker compose build ○docker compose build nocache 8
+>>>>>>> Stashed changes
 localhost7474 9
 neo4j browser 10 httpsneo4jcomdocsbrowsermanualcurrentvisualtour localhost7474 login
 inserting data creating nodes create user name alice birthplace paris create user name bob birthplace london create user name carol birthplace london create user name dave birthplace london create user name eve birthplace rome 11
@@ -74,6 +94,7 @@ adding edges load csv headers filenetflixtitlescsv line match mmovie id lineshow
 gut check let’s check movie titled ray match mmovie title raydirectedpperson return p 21
 22
 ds 4300 nosql kv dbs mark fontenot phd northeastern university material used permission dr rachlin thanks
+<<<<<<< Updated upstream
 distributed dbs acid pessimistic concurrency ●acid transactions ○focuses “data safety” ○considered pessimistic concurrency model assumes one transaction protect transactions ■iow assumes something go wrong ○conﬂicts prevented locking resources transaction complete read write locks ○write lock analogy → borrowing book library… one else 2see httpswwwfreecodecamporgnewshowdatabasesguaranteeisolation deeper dive
 optimistic concurrency ●transactions obtain locks data read write ●optimistic assumes conﬂicts unlikely occur ○ even conﬂict everything still ok ●but ○ add last update timestamp version number columns every table… read changing check end transaction see transaction caused modiﬁed 3
 optimistic concurrency ●low conﬂict systems backups analytical dbs etc ○read heavy systems ○the conﬂicts arise handled rolling back rerunning transaction notices conﬂict ○so optimistic concurrency works well allows higher concurrency ●high conﬂict systems ○rolling back rerunning transactions encounter conﬂict → less efﬁcient ○so locking scheme pessimistic model might preferable 4
@@ -83,6 +104,17 @@ cap theorem review 7 reference httpsalperenbayramoglucompostsunderstandingcapthe
 acid alternative distrib systems base ●basically available ○guarantees availability data per cap response “failure”“unreliable” data inconsistent changing state ○system appears work time 8
 acid alternative distrib systems base ●soft state state system could change time even wo input changes could result eventual consistency ○data stores don’t writeconsistent ○replicas don’t mutually consistent 9
 acid alternative distrib systems base ●eventual consistency system eventually become consistent ○all writes eventually stop nodesreplicas updated 10
+=======
+distributed dbs acid pessimistic concurrency acid transactions ○focuses “data safety” ○considered pessimistic concurrency model assumes one transaction protect transactions ■iow assumes something go wrong ○conﬂicts prevented locking resources transaction complete read write locks ○write lock analogy → borrowing book library… one else 2see httpswwwfreecodecamporgnewshowdatabasesguaranteeisolation deeper dive
+optimistic concurrency transactions obtain locks data read write optimistic assumes conﬂicts unlikely occur ○ even conﬂict everything still ok ○ add last update timestamp version number columns every table… read changing check end transaction see transaction caused modiﬁed 3
+optimistic concurrency low conﬂict systems backups analytical dbs etc ○read heavy systems ○the conﬂicts arise handled rolling back rerunning transaction notices conﬂict ○so optimistic concurrency works well allows higher concurrency high conﬂict systems ○rolling back rerunning transactions encounter conﬂict → less efﬁcient ○so locking scheme pessimistic model might preferable 4
+nosql “nosql ” ﬁrst used 1998 carlo strozzi describe relational database system use sql common modern meaning “not sql ” sometimes thought nonrelational dbs idea originally developed part response processing unstructured webbased data 5 httpswwwdataversitynetabriefhistoryofnonrelationaldatabases
+cap theorem review 6 reference httpsalperenbayramoglucompostsunderstandingcaptheorem 2 3 following consistency every user db identical view data given instant availability event failure database system remains operational partition olerance database maintain operations event network’s failing two segments distributed system note definition consistency cap different acid
+cap theorem review 7 reference httpsalperenbayramoglucompostsunderstandingcaptheorem consistency availability system always responds latest data every request gets response may able deal network partitions consistency partition olerance system responds data distrib system always latest else data request dropped availability partition olerance system always sends responds based distributed store may absolute latest data
+acid alternative distrib systems base basically available ○guarantees availability data per cap response “failure”“unreliable” data inconsistent changing state ○system appears work time 8
+acid alternative distrib systems base soft state state system could change time even wo input changes could result eventual consistency ○data stores don’t writeconsistent ○replicas don’t mutually consistent 9
+acid alternative distrib systems base eventual consistency system eventually become consistent ○all writes eventually stop nodesreplicas updated 10
+>>>>>>> Stashed changes
 categories nosql dbs review 11
 first → keyvalue databases 12
 key value stores key value keyvalue stores designed around simplicity data model extremely simple comparatively tables rdbms complex lends simple crud ops api creation 13
@@ -113,10 +145,17 @@ set commands sadd ds4300 “mark” sadd ds4300 “sam” sadd cs3200 “nick”
 38
 ds 4300 document databases mongodb mark fontenot phd northeastern university material used permission dr rachlin thanks
 document database document database nonrelational database stores data structured documents usually json designed simple ﬂexible scalable 2
+<<<<<<< Updated upstream
 json ● json javascript object notation ○ lightweight datainterchange format ○ easy humans read write ○ easy machines parse generate ● json built two structures ○ collection namevalue pairs various languages operationalized object record struct dictionary hash table keyed list associative array ○ ordered list values languages operationalized array vector list sequence ● two universal data structures supported virtually modern programming languages ○ thus json makes great data interchange format 3
 json syntax 4 httpswwwjsonorgjsonenhtml
 binary json bson bson → binary json binaryencoded serialization jsonlike document structure supports extended types part basic json eg date binarydata etc lightweight keep space overhead minimum traversable designed easily traversed vitally important document db efﬁcient encoding decoding must efﬁcient supported many modern programming languages 5
 xml extensible markup language ●precursor json data exchange format ●xml css → web pages separated content formatting ●structurally similar html tag set extensible 6
+=======
+json json javascript object notation ○ lightweight datainterchange format ○ easy humans read write ○ easy machines parse generate json built two structures ○ collection namevalue pairs various languages operationalized object record struct dictionary hash table keyed list associative array ○ ordered list values languages operationalized array vector list sequence two universal data structures supported virtually modern programming languages ○ thus json makes great data interchange format 3
+json syntax 4 httpswwwjsonorgjsonenhtml
+binary json bson bson → binary json binaryencoded serialization jsonlike document structure supports extended types part basic json eg date binarydata etc lightweight keep space overhead minimum traversable designed easily traversed vitally important document db efﬁcient encoding decoding must efﬁcient supported many modern programming languages 5
+xml extensible markup language precursor json data exchange format xml css → web pages separated content formatting structurally similar html tag set extensible 6
+>>>>>>> Stashed changes
 xmlrelated toolstechnologies xpath syntax retrieving speciﬁc elements xml doc xquery query language interrogating xml documents sql xml dtd document type deﬁnition language describing allowed structure xml document xslt extensible stylesheet language transformation tool transform xml formats including nonxml formats html 7
 document databases document databases address impedance mismatch problem object persistence oo systems relational dbs structure data oo programming → inheritance composition types save complex object relational database basically deconstruct structure document selfdescribing wellaligned apps use jsonxml transport layer 8
 mongodb 9
@@ -125,8 +164,13 @@ mongodb structure 11 database collection collection b collection c document 1 do
 mongodb documents predeﬁned schema documents needed every document collection could different dataschema 12
 relational vs mongodocument db 13 rdbms mongodb database database tableview collection row document column field index index join embedded document foreign key reference
 mongodb features rich query support robust support crud ops indexing supports primary secondary indices document ﬁelds replication supports replica sets automatic failover load balancing built 14
+<<<<<<< Updated upstream
 mongodb versions ●mongodb atlas ○fully managed mongodb service cloud dbaas ●mongodb enterprise ○subscriptionbased selfmanaged version mongodb ●mongodb community ○sourceavailable freetouse selfmanaged 15
 interacting mongodb ●mongosh → mongodb shell ○cli tool interacting mongodb instance ●mongodb compass ○free opensource gui work mongodb database ●datagrip 3rd party ools ●every major language library interface mongodb ○pymongo python mongoose javascriptnode … 16
+=======
+mongodb versions mongodb atlas ○fully managed mongodb service cloud dbaas mongodb enterprise ○subscriptionbased selfmanaged version mongodb mongodb community ○sourceavailable freetouse selfmanaged 15
+interacting mongodb mongosh → mongodb shell ○cli tool interacting mongodb instance mongodb compass ○free opensource gui work mongodb database datagrip 3rd party ools every major language library interface mongodb ○pymongo python mongoose javascriptnode … 16
+>>>>>>> Stashed changes
 mongodb community edition docker create container map hostcontainer port 27017 give initial username password superuser 17 e
 mongodb compass gui ool interacting mongodb instance download install 18
 load mflix sample data set compass create new database named mﬂix download mﬂix sample dataset unzip import json ﬁles users theaters movies comments new collections mﬂix database 19
@@ -141,45 +185,65 @@ comparison operators 27
 mongosh countdocuments many movies movies collection released 2010 either least 5 awards genre drama 28 dbmoviescountdocuments “year” 2010 awardswins gte 5 “genres” drama
 mongosh project return names movies movies collection released 2010 either least 5 awards genre drama 29 dbmoviescountdocuments “year” 2010 awardswins gte 5 “genres” drama “name” 1 “id” 0 1 return 0 don’t return
 pymongo 30
+<<<<<<< Updated upstream
 pymongo ●pymongo python library interfacing mongodb instances 31 pymongo import mongoclient client mongoclient ‘mongodb username pwlocalhost 27017’
+=======
+pymongo pymongo python library interfacing mongodb instances 31 pymongo import mongoclient client mongoclient ‘mongodb username pwlocalhost 27017’
+>>>>>>> Stashed changes
 getting database collection 32 pymongo import mongoclient client mongoclient ‘mongodb username pwlocalhost 27017’ db client‘ds4300’ collection db‘mycollection’
 inserting single document 33 db client‘ds4300’ collection db‘mycollection’ post “author” “mark” “text” “mongodb cool” “tags” “mongodb” “python” postid collection insertone postinsertedid printpostid
 count documents collection select count collection 34 demodbcollectioncountdocuments
 35
 ds 4300 aws introduction mark fontenot phd northeastern university
+<<<<<<< Updated upstream
 amazon web services ●leading cloud platform 200 different services available ●globally available via massive networks regions availability zones massive data centers ●based payasyouuse cost model ○theoretically cheaper renting rackspaceservers data center… theoretically 2
 history aws ●originally launched 2006 2 services s3 ec2 ●by 2010 services expanded include simpledb elastic block store relational database service dynamodb cloudwatch simple workﬂow cloudfront availability zones others ●amazon competitions big prizes spur adoption aws early days ●they’ve continuously innovated always introducing new services ops dev analytics etc… 200 services 3
 aws service categories 4
 cloud models ●iaas infrastructure service ○contains basic services needed build infrastructure ●paas platform service ○remove need manage infrastructure ○you get right deploying app ●saas software service ○provide full software apps run managed another partyvendor 5
+=======
+amazon web services leading cloud platform 200 different services available globally available via massive networks regions availability zones massive data centers based payasyouuse cost model ○theoretically cheaper renting rackspaceservers data center… theoretically 2
+history aws originally launched 2006 2 services s3 ec2 2010 services expanded include simpledb elastic block store relational database service dynamodb cloudwatch simple workﬂow cloudfront availability zones others amazon competitions big prizes spur adoption aws early days they’ve continuously innovated always introducing new services ops dev analytics etc… 200 services 3
+aws service categories 4
+cloud models iaas infrastructure service ○contains basic services needed build infrastructure paas platform service ○remove need manage infrastructure ○you get right deploying app saas software service ○provide full software apps run managed another partyvendor 5
+>>>>>>> Stashed changes
 cloud models 6 httpsbluexpnetappcomiaas
 shared responsibility model aws aws responsibilities security cloud security physical infrastructure infra network keep data centers secure control access maintain power availability hvac etc monitor maintain physical networking equipment global infraconnectivity hypervisor host oss manage virtualization layer used aws compute services maintaining underlying host oss services maintaining managed services keep infra date functional maintain server software patching etc 7
 shared responsibility model client client responsibilities security cloud control datacontent client controls data classiﬁed encrypted shared implement enforce appropriate datahandling policies access management iam properly conﬁgure iam users roles policies enforce principle least privilege manage selfhosted apps associated oss ensure network security vpc handle compliance governance policies procedures 8
 aws global infrastructure regions distinct geographical areas useast1 uswest 1 etc availability zones azs region multiple azs roughly equiv isolated data centers edge locations locations cdn types caching services allows content closer end user 9
 10 httpsawsamazoncomaboutawsglobalinfrastructure
 compute services 11 httpsawsamazoncomproductscompute vmbased ec2 ec2 spot elastic cloud compute containerbased ecs elastic container service ecr elastic container registry eks elastic kubernetes service fargate serverless container service serverless aws lambda
+<<<<<<< Updated upstream
 storage services 12 httpsawsamazoncomproductsstorage ●amazon s3 simple storage service ○ object storage buckets highly scalable different storage classes ●amazon efs elastic file system ○ simple serverless elastic “setandforget” ﬁle system ●amazon ebs elastic block storage ○ highperformance block storage service ●amazon file cache ○ highspeed cache datasets stored anywhere ●aws backup ○ fully managed policybased service automate data protection compliance apps aws
 database services ●relational amazon rds amazon aurora ●keyvalue amazon dynamodb ●inmemory amazon memorydb amazon elasticache ●document amazon documentdb compat mongodb ●graph amazon neptune 13
 analytics services ●amazon athena analyze petabyte scale data lives s3 example ●amazon emr elastic mapreduce access apache spark hive presto etc ●aws glue discover prepare integrate data ●amazon redshift data warehousing service ●amazon kinesis realtime data streaming ●amazon quicksight cloudnative bireporting tool 14
 ml ai services amazon sagemaker fullymanaged ml platform including jupyter nbs build train deploy ml models aws ai services w pretrained models amazon comprehend nlp amazon rekognition imagevideo analysis amazon extract ext extraction amazon translate machine translation 15
 important services data analyticsengineering ec2 lambda amazon s3 amazon rds dynamodb aws glue amazon athena amazon emr amazon redshift 16
 aws free tier ●allows gain handson experience subset services 12 months service limitations apply well ○amazon ec2 750 hoursmonth speciﬁc oss instance sizes ○amazon s3 5gb 20k gets 2k puts ○amazon rds 750 hoursmonth db use within certain limits ○… many free services 17
+=======
+storage services 12 httpsawsamazoncomproductsstorage amazon s3 simple storage service ○ object storage buckets highly scalable different storage classes amazon efs elastic file system ○ simple serverless elastic “setandforget” ﬁle system amazon ebs elastic block storage ○ highperformance block storage service amazon file cache ○ highspeed cache datasets stored anywhere aws backup ○ fully managed policybased service automate data protection compliance apps aws
+database services relational amazon rds amazon aurora keyvalue amazon dynamodb inmemory amazon memorydb amazon elasticache document amazon documentdb compat mongodb graph amazon neptune 13
+analytics services amazon athena analyze petabyte scale data lives s3 example amazon emr elastic mapreduce access apache spark hive presto etc aws glue discover prepare integrate data amazon redshift data warehousing service amazon kinesis realtime data streaming amazon quicksight cloudnative bireporting tool 14
+ml ai services amazon sagemaker fullymanaged ml platform including jupyter nbs build train deploy ml models aws ai services w pretrained models amazon comprehend nlp amazon rekognition imagevideo analysis amazon extract ext extraction amazon translate machine translation 15
+important services data analyticsengineering ec2 lambda amazon s3 amazon rds dynamodb aws glue amazon athena amazon emr amazon redshift 16
+aws free tier allows gain handson experience subset services 12 months service limitations apply well ○amazon ec2 750 hoursmonth speciﬁc oss instance sizes ○amazon s3 5gb 20k gets 2k puts ○amazon rds 750 hoursmonth db use within certain limits ○… many free services 17
+>>>>>>> Stashed changes
 18
 ds 4300 large scale information storage retrieval mark fontenot phd northeastern university
-hi 󰗞 ●mark fontenot phd ○ofﬁce 353 meserve hall ○ofﬁce hours ■m th 130 300 pm times don’t work dm slack set alternate time ○usually available slack… dm ●mfontenotnortheasternedu 2
+hi 󰗞 mark fontenot phd ○ofﬁce 353 meserve hall ○ofﬁce hours ■m th 130 300 pm times don’t work dm slack set alternate time ○usually available slack… dm mfontenotnortheasternedu 2
 teaching assistants 3 iker acosta venegas dallon archibald nathan cheung aryan jain abhishek kumar eddy liu sevinch noori junxiang lin
-ﬁnd … ● course materials notes assignments etc httpsmarkfontenotnetteachingds430025sds4300 ● assignment submissions grades gradescope ●q platform campuswire ●quick dms announcements slack 4
-what’s class ●by end class ○ understand efﬁciencyrelated concepts including limitations rdbmss ○ understand data replication distribution effects typical db usage scenarios ○ understand use cases data models various nosql database systems including storing retrieving data data models include documentbased keyvalue stores graph based among others ○ access implement data engineering bigdatarelated aws services 5
+ﬁnd … course materials notes assignments etc httpsmarkfontenotnetteachingds430025sds4300 assignment submissions grades gradescope q platform campuswire quick dms announcements slack 4
+what’s class end class ○ understand efﬁciencyrelated concepts including limitations rdbmss ○ understand data replication distribution effects typical db usage scenarios ○ understand use cases data models various nosql database systems including storing retrieving data data models include documentbased keyvalue stores graph based among others ○ access implement data engineering bigdatarelated aws services 5
 course deliverables evaluation 6
-assignments ●homeworks practicals ○usually due tuesday nights 1159 unless otherwise stated ○3 bonus submitting 48 hours early no… can’t get 3 submitting 48 hours early ○no late submissions accepted ■ but… life happens… everyone gets 1 free noquestionsasked 48 hour extension ■ dm dr fontenot slack sometime original deadline requesting use extension 7
-assignments ●submissions via gradescope andor github unless directed otherwise ○only submit pdfs unless otherwise instructed ○if submitting pdf sure associate questions gradescope correct page pdf ■failure may result grade 0 assignment ●all regrade requests must submitted within 48 hours grades released gradescope exceptions 8
+assignments homeworks practicals ○usually due tuesday nights 1159 unless otherwise stated ○3 bonus submitting 48 hours early no… can’t get 3 submitting 48 hours early ○no late submissions accepted ■ but… life happens… everyone gets 1 free noquestionsasked 48 hour extension ■ dm dr fontenot slack sometime original deadline requesting use extension 7
+assignments submissions via gradescope andor github unless directed otherwise ○only submit pdfs unless otherwise instructed ○if submitting pdf sure associate questions gradescope correct page pdf ■failure may result grade 0 assignment regrade requests must submitted within 48 hours grades released gradescope exceptions 8
 midterm monday march 17 mark calendars 9
-final grade breakdown ●homeworks 5 30 ●practicals 2 20 ●midterm 20 ●semester project 30 10
+final grade breakdown homeworks 5 30 practicals 2 20 midterm 20 semester project 30 10
 reference materials primary resources 11 o’reilly playlist books playlist add additional materials playlist webpage semester progresses
-tentative list topics ●thinking data storage retrieval data structures level ●how far get relational model ●nosql databases ○ document databases mongo ○ graph databases neo4j ○ keyvalue databases ○ maybe vector databases ●data distribution replication ●distributed sql dbs apache sparksparksql ●big data ools services aws 12
-tools need install laptop ●docker desktop ●anaconda miniconda python ○you’re welcome use another distro you’re responsible ﬁxing something doesn’t work dependency conﬂicts etc ●a database access tool like datagrip dbeaver ●vs code set python development ○see info vscode python anaconda ●ability interact git github terminal gui app 13
+tentative list topics thinking data storage retrieval data structures level far get relational model nosql databases ○ document databases mongo ○ graph databases neo4j ○ keyvalue databases ○ maybe vector databases data distribution replication distributed sql dbs apache sparksparksql big data ools services aws 12
+tools need install laptop docker desktop anaconda miniconda python ○you’re welcome use another distro you’re responsible ﬁxing something doesn’t work dependency conﬂicts etc database access tool like datagrip dbeaver vs code set python development ○see info vscode python anaconda ability interact git github terminal gui app 13
 topics review next days shellcmd promptpowershell cli windows want unix terminal wsl2 zsh windows navigating ﬁle system running commands like pip conda python etc command line args docker docker compose basics dockerﬁles dockercomposeyaml ﬁles port mapping setting volumes mapping host guest os 14
 python rusty haven’t done ton python crash course net ninja yt o’reilly see python section class playlist python objectoriented programming video course simon sez e matthes python crash course 3rd edition starch press related yt video playlist listed 15
-expectations ●conduct respectfully ●don’t distract classmates learning ●don’t cheat ○do work unless group assignment ○discussing problems encouraged must formulate solutions ○see syllabus details 16
+expectations conduct respectfully don’t distract classmates learning don’t cheat ○do work unless group assignment ○discussing problems encouraged must formulate solutions ○see syllabus details 16
 let’s gooo 17
 ds 4300 moving beyond relational model mark fontenot phd northeastern university
 beneﬁts relational model mostly standard data model query language acid compliance second atomicity consistency isolation durability works well highly structured data handle large amounts data well understood lots tooling lots experience 2
@@ -221,15 +285,24 @@ redis ml simpliﬁed example 14 source httpswwwfeatureformcompostfeaturestoresex
 redis dsml 15 source httpsmadewithmlcomcoursesmlopsfeaturestore
 ds 4300 amazon ec2 lambda mark fontenot phd northeastern university based part material gareth eagar’s data engineering aws packt publishing
 ec2 2
+<<<<<<< Updated upstream
 ec2 ●ec2 → elastic cloud compute ●scalable virtual computing cloud ●many many instance types available ●payasyougo model pricing ●multiple different operating systems 3
 features ec2 ●elasticity easily programmatically scale instances needed ●you use one standard amis provide ami preconﬁg needed ●easily integrates many services s3 rds etc 4 ami amazon machine image
 ec2 lifecycle ●launch starting instance ﬁrst time chosen conﬁguration ●startstop emporarily suspend usage without deleting instance ●t erminate permanently delete instance ●reboot restart instance without sling data root volume 5
 store data instance store emporary highspeed storage tied instance lifecycle efs elastic file system support shared ﬁle storage ebs elastic block storage persistent blocklevel storage s3 large data set storage ec2 backups even 6
 common ec2 use cases ●web hosting run websiteweb server associated apps ●data processing it’s vm… anything data possible programming language ●machine learning train models using gpu instances ●disaster recovery backup critical workloads infrastructure cloud 7
+=======
+ec2 ec2 → elastic cloud compute scalable virtual computing cloud many many instance types available payasyougo model pricing multiple different operating systems 3
+features ec2 elasticity easily programmatically scale instances needed use one standard amis provide ami preconﬁg needed easily integrates many services s3 rds etc 4 ami amazon machine image
+ec2 lifecycle launch starting instance ﬁrst time chosen conﬁguration startstop emporarily suspend usage without deleting instance erminate permanently delete instance reboot restart instance without sling data root volume 5
+store data instance store emporary highspeed storage tied instance lifecycle efs elastic file system support shared ﬁle storage ebs elastic block storage persistent blocklevel storage s3 large data set storage ec2 backups even 6
+common ec2 use cases web hosting run websiteweb server associated apps data processing it’s vm… anything data possible programming language machine learning train models using gpu instances disaster recovery backup critical workloads infrastructure cloud 7
+>>>>>>> Stashed changes
 let’s spin ec2 instance 8
 let’s spin ec2 instance 9
 let’s spin ec2 instance 10
 ubuntu vm commands initial user ubuntu access super user commands sudo package manager apt kind like homebrew choco update packages installed sudo apt update sudo apt upgrade 11
+<<<<<<< Updated upstream
 miniconda ec2 make sure you’re logged ec2 instance ●let’s install miniconda ○ curl httpsrepoanacondacomminicondaminiconda3latestlinuxx8664sh ○ bash miniconda3latestlinuxx8664sh 12
 installing using streamlit ●log ec2 instance log back ●make sure pip available ○pip version ●install streamlit sklearn ○pip install streamlit scikitlearn ●make directory small web app ○mkdir web ○cd web 13
 basic streamlit app ●nano testpy ● add code left ●ctrlx save exit ●streamlit run testpy 14 import streamlit st def main sttitlewelcome streamlit app stwrite data sets stwrite data set 01 data set 02 data set 03 stwriten stwrite goodbye name main main
@@ -247,6 +320,25 @@ test 25
 26
 ds 4300 mongodb pymongo mark fontenot phd northeastern university
 pymongo ●pymongo python library interfacing mongodb instances 2 pymongo import mongoclient client mongoclient ‘mongodb username pw localhost 27017’
+=======
+miniconda ec2 make sure you’re logged ec2 instance let’s install miniconda ○ curl httpsrepoanacondacomminicondaminiconda3latestlinuxx8664sh ○ bash miniconda3latestlinuxx8664sh 12
+installing using streamlit log ec2 instance log back make sure pip available ○pip version install streamlit sklearn ○pip install streamlit scikitlearn make directory small web app ○mkdir web ○cd web 13
+basic streamlit app nano testpy add code left ctrlx save exit streamlit run testpy 14 import streamlit st def main sttitlewelcome streamlit app stwrite data sets stwrite data set 01 data set 02 data set 03 stwriten stwrite goodbye name main main
+opening streamlit port 15
+browser 16
+aws lambda 17
+lambdas lambdas provide serverless computing automatically run code response events relieves manage servers worry code pay execution time idle compute time different ec2 18
+lambda features eventdriven execution triggered many different events aws supports large number runtimes… python java nodejs etc highl integrated aws services extremely scalable rapidly adjust demands 19
+works addupload code aws mgmt console conﬁgure event sources watch lambda run one event sources ﬁres event 20
+let’s make one 21
+making lambda 22
+creating function 23
+sample code edit code deploy code 24
+test 25
+26
+ds 4300 mongodb pymongo mark fontenot phd northeastern university
+pymongo pymongo python library interfacing mongodb instances 2 pymongo import mongoclient client mongoclient ‘mongodb username pw localhost 27017’
+>>>>>>> Stashed changes
 getting database collection 3 pymongo import mongoclient client mongoclient ‘mongodb username pw localhost 27017’ db client‘ds4300’ clientds4300 collection db‘mycollection’ dbmycollection
 inserting single document 4 db client‘ds4300’ collection db‘mycollection’ post “author” “mark” “text” “mongodb cool” “tags” “mongodb” “python” postid collection insertone postinsertedid printpostid
 find movies 2000 5 bsonjsonutil import dumps find movies released 2000 movies2000 dbmoviesfindyear 2000 print results printdumpsmovies2000 indent 2

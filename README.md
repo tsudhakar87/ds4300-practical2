@@ -5,6 +5,7 @@ Team members:
 
 ### To execute this project:
 1. Run `pip install -r requirements.txt` to get all libraries necessary to run this project.
+2. Run `ollama pull llama2:7b` and `ollama pull mistral:7b` to pull the LLM models used.
 
 Instructions to follow!
 

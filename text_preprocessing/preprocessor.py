@@ -66,7 +66,6 @@ class Preprocessor:
                     chunks = self.split_text_into_chunks(cleaned_text)
 
                     for chunk_index, chunk in enumerate(chunks):
-                        print(f"Chunk {chunk_index+1} from Page {page_num} ready.")
                         all_chunks.append((file_name, page_num, chunk_index, chunk))
 
         return all_chunks

@@ -39,7 +39,7 @@ def create_pipeline():
     chunk_size, overlap, text_prep, embedding_model, database, local_llm = read_input()
 
     # Initialize Preprocessor
-    preprocessor = Preprocessor(data_dir="./data", chunk_size=chunk_size, overlap=overlap, text_prep=text_prep)
+    preprocessor = Preprocessor(data_dir="./class_materials/slides/", chunk_size=chunk_size, overlap=overlap, text_prep=text_prep)
     print(f"Preprocessor initialized with text prep strategy: {text_prep}")
 
     if database.lower() == 'redis':

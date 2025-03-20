@@ -1,4 +1,7 @@
 nltk
 PyPDF2
 chromadb
-
+ollama
+redis
+pymilvus
+chromadb

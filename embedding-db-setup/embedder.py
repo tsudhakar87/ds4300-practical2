@@ -1,5 +1,5 @@
 import ollama
-import sentence
+from sentence_transformers import SentenceTransformer
 from abc import ABC, abstractmethod
 
 class Embedder(ABC):
@@ -16,7 +16,6 @@ class Embedder(ABC):
         return response["embedding"]
     
     @classmethod
-    @timer
     def indexing_speed():
         pass
 

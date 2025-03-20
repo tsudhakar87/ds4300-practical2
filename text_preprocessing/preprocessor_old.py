@@ -1,6 +1,3 @@
-# This file is in charge of extracting and preprocessing the text
-# from the PDF files of the class materials.
-
 import os
 import string
 import nltk

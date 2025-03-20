@@ -1,7 +1,7 @@
 import redis
 import numpy as np
 from redis.commands.search.query import Query
-from embedder import Embedder
+from embedding_db_setup.embedder import Embedder
 
 # embedding constants
 VECTOR_DIM = 768

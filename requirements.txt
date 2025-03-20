@@ -5,3 +5,4 @@ ollama
 redis
 pymilvus
 chromadb
+sentence-transformers

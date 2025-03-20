@@ -1,5 +1,5 @@
-from embedding_db_setup import RedisInstantiator
-from text_preprocessing import Preprocessor
+from embedding_db_setup.redis_instantiator import RedisInstantiator
+from text_preprocessing.preprocessor import Preprocessor
 
 def read_input():
     """Reads inputs to make the pipeline with default values if none are provided."""

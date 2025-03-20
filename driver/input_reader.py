@@ -1,3 +1,4 @@
+from embedding_db_setup.embedder import Embedder
 from embedding_db_setup.redis_instantiator import RedisInstantiator
 from text_preprocessing.preprocessor import Preprocessor
 
@@ -25,7 +26,7 @@ def read_input():
 
     return chunk_size, overlap, text_prep, embedding_model, database, local_llm
 
-def process_and_store(preprocessor, redis_instance):
+def process_and_store(preprocessor, redis_instance: Embedder):
     print("Processing PDFs and storing embeddings...")
 
     all_chunks = preprocessor.process_pdfs()
@@ -33,7 +34,7 @@ def process_and_store(preprocessor, redis_instance):
     for file_name, page_num, chunk_index, chunk in all_chunks:
         print(f"Storing Chunk {chunk_index+1} from {file_name}, Page {page_num}")
         embedding = redis_instance.get_embedding(chunk)
-        redis_instance.store_embedding(chunk, embedding)
+        redis_instance.store_embedding(file_name, page_num, chunk, embedding)
 
 def create_pipeline():
     chunk_size, overlap, text_prep, embedding_model, database, local_llm = read_input()

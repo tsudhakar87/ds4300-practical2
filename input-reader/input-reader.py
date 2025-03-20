@@ -19,6 +19,11 @@ def read_input():
     local_llm = input("Enter local LLM: ")
 
     print(f"Chunk size: {chunk_size}, Overlap: {overlap}, Text prep: {text_prep}, Model: {embedding_model}, DB: {database}, LLM: {local_llm}")
+    
+    return chunk_size, overlap, text_prep, embedding_model, database, local_llm
+
+def create_pipeline():
+    pass
 
 def main():
     input_str = int(input("What would you like to do? \n 1. Run a pipeline \n 2. Query the model\n"))
@@ -30,5 +35,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
-    

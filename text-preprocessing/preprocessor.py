@@ -10,45 +10,57 @@ from PyPDF2 import PdfReader
 stop_words = set(stopwords.words("english"))
 
 def extract_text_from_pdf(pdf_path):
+    """
+    Extracts text from a pdf path.
+    """
     reader = PdfReader(pdf_path)
-    pages = reader.pages
-    text_list = [page.extract_text() for page in pages if page.extract_text()]
+    text_list = [(i+1, page.extract_text()) for i, page in enumerate(reader.pages) if page.extract_text()]
     return text_list
 
-def clean_text(text_list):
-    cleaned_text = []
+def clean_text(text):
 
-    for text in text_list:
-        text = text.lower().strip() 
-        text = text.translate(str.maketrans('', '', string.punctuation)) 
-        text = text.replace("●", "")
-        words = text.split()
-        cleaned_text.append(" ".join([word for word in words if word not in stop_words])) 
+    text = text.lower().strip() 
+    text = text.translate(str.maketrans('', '', string.punctuation)) 
+    text = text.replace("●", "")
+    words = text.split()
+    cleaned_text = " ".join([word for word in words if word not in stop_words])
     
     return cleaned_text
 
-def process_pdfs_in_folder(folder_path, output_filename):
-    all_cleaned_text = []
+def split_text_into_chunks(text, chunk_size=300, overlap=50):
 
-    for filename in os.listdir(folder_path):
-        if filename.endswith(".pdf"): 
-            pdf_path = os.path.join(folder_path, filename)
-            extracted_text_list = extract_text_from_pdf(pdf_path) 
-            cleaned_text_list = clean_text(extracted_text_list)  
+    words = text.split()
+    chunks = []
+    for i in range(0, len(words), chunk_size - overlap):
+        chunk = " ".join(words[i : i + chunk_size])
+        chunks.append(chunk)
+    return chunks
 
+
+def process_pdfs(data_dir):
+
+    for file_name in os.listdir(data_dir):
+        if file_name.endswith(".pdf"):
+            pdf_path = os.path.join(data_dir, file_name)
+            text_by_page = extract_text_from_pdf(pdf_path)
             
-            all_cleaned_text.extend(cleaned_text_list)    
+            for page_num, text in text_by_page:
+                cleaned_text = clean_text(text)
+                chunks = split_text_into_chunks(cleaned_text)
+                print(f"  Chunks: {chunks}")
 
-    final_text = "\n".join(all_cleaned_text)  
+            '''
+                for chunk_index, chunk in enumerate(chunks):
+                    # embedding = calculate_embedding(chunk)
+                    embedding = get_embedding(chunk)
+                    store_embedding(
+                        file=file_name,
+                        page=str(page_num),
+                        # chunk=str(chunk_index),
+                        chunk=str(chunk),
+                        embedding=embedding,
+                    )
+            print(f" -----> Processed {file_name}")'
+            '''
 
-    with open(output_filename, "w", encoding="utf-8") as file:
-        file.write(final_text) 
-
-    print("Processed text saved to:", output_filename)
-    return final_text  
-
- 
-folder_path = "class-materials/slides" 
-output_file = "cleaned_text.txt"
-
-cleaned_text = process_pdfs_in_folder(folder_path, output_file)
+process_pdfs('class-materials/slides')

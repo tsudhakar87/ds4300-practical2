@@ -1,2 +1,4 @@
 nltk
 PyPDF2
+chromadb
+

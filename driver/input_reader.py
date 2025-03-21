@@ -58,28 +58,23 @@ def create_pipeline():
     else:
         print(f"Database {database} not supported yet.")
 
-def generate_responses(redis_instance, llm_model):
+def generate_responses(instantiator: Embedder, llm_model):
     print("Generating responses using LLM...")
-    redis_instance.llm_model = llm_model
+    instantiator.llm_model = llm_model
 
-    questions = [
-        'Add 23 to the AVL Tree below.  What imbalance case is created with inserting 23? 
-		     30
-	        /  \
-	        25  35
-	        /
-          20	'
-    ]
+    questions = []
 
     for question in questions:
         print(f"\nQuestion: {question}")
-        redis_instance.chat_with_model(question)
+        instantiator.chat_with_model(question)
 
 def main():
     input_str = int(input("What would you like to do? \n 1. Run a pipeline \n 2. Query the model \n"))
 
     if input_str == 1:
         create_pipeline()
+    elif input_str == 2:
+        pass
     else:
         print("Invalid option or Query model logic not implemented yet.")
 

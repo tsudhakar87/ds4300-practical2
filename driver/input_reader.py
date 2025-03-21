@@ -63,8 +63,12 @@ def generate_responses(redis_instance, llm_model):
     redis_instance.llm_model = llm_model
 
     questions = [
-        "What is the difference between a list where memory is contiguously allocated and a list where linked structures are used?",
-        "When are linked lists faster than contiguously-allocated lists?"
+        'Add 23 to the AVL Tree below.  What imbalance case is created with inserting 23? 
+		     30
+	        /  \
+	        25  35
+	        /
+          20	'
     ]
 
     for question in questions:

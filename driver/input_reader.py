@@ -2,6 +2,8 @@ from embedding_db_setup.embedder import Embedder
 from embedding_db_setup.redis_instantiator import RedisInstantiator
 from text_preprocessing.preprocessor import Preprocessor
 
+
+
 def read_input():
     """Reads inputs to make the pipeline with default values if none are provided."""
     use_defaults = input("Use defaults? (y/n, default y): ") or 'y'
@@ -62,11 +64,14 @@ def generate_responses(instantiator: Embedder, llm_model):
     print("Generating responses using LLM...")
     instantiator.llm_model = llm_model
 
-    questions = []
 
-    for question in questions:
-        print(f"\nQuestion: {question}")
-        instantiator.chat_with_model(question)
+    while True:
+        question = input("\nEnter your question (or type 'exit' to quit): ").strip()
+        if question.lower() == 'exit':
+            print("Exiting query mode.")
+            break
+        response = instantiator.chat_with_model(question)
+
 
 def main():
     input_str = int(input("What would you like to do? \n 1. Run a pipeline \n 2. Query the model \n"))

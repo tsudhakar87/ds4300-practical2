@@ -62,11 +62,12 @@ def generate_responses(instantiator: Embedder, llm_model):
     print("Generating responses using LLM...")
     instantiator.llm_model = llm_model
 
-    questions = []
 
-    for question in questions:
-        print(f"\nQuestion: {question}")
-        instantiator.chat_with_model(question)
+     
+    question = input("\nEnter your question").strip()
+    instantiator.chat_with_model(question)
+
+
 
 def main():
     input_str = int(input("What would you like to do? \n 1. Run a pipeline \n 2. Query the model \n"))

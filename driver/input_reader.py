@@ -60,7 +60,7 @@ def create_pipeline():
     else:
         print(f"Database {database} not supported yet.")
 
-def generate_responses(instantiator: Embedder, llm_model):
+def generate_responses(instantiator: Embedder, llm_model: str):
     print("Generating responses using LLM...")
     instantiator.llm_model = llm_model
 

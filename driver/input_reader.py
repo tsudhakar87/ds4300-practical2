@@ -2,6 +2,7 @@ from embedding_db_setup.embedder import Embedder
 from embedding_db_setup.redis_instantiator import RedisInstantiator
 from embedding_db_setup.chroma_instantiator import ChromaInstantiator
 from text_preprocessing.preprocessor import Preprocessor
+from timer.timer import timer
 
 
 
@@ -73,6 +74,7 @@ def create_pipeline():
     else:
         print(f"Database {database} not supported yet.")
 
+@timer
 def generate_responses(instantiator: Embedder, llm_model: str):
     print("Generating responses using LLM...")
     instantiator.llm_model = llm_model
@@ -86,6 +88,7 @@ def generate_responses(instantiator: Embedder, llm_model: str):
         response = instantiator.chat_with_model(question)
 
 
+@timer
 def main():
     input_str = int(input("What would you like to do? \n 1. Run a pipeline \n 2. Query the model \n"))
 
@@ -95,6 +98,7 @@ def main():
         pass
     else:
         print("Invalid option or Query model logic not implemented yet.")
+
 
 if __name__ == "__main__":
     main()

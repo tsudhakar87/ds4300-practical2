@@ -8,7 +8,6 @@ VECTOR_DIM = 768
 INDEX_NAME = "embedding_index"
 DOC_PREFIX = "doc:"
 DISTANCE_METRIC = "COSINE"
-
 class RedisInstantiator(Embedder):
     def __init__(self):
         super().__init__()

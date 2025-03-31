@@ -4,8 +4,6 @@ from embedding_db_setup.chroma_instantiator import ChromaInstantiator
 from text_preprocessing.preprocessor import Preprocessor
 from timer.timer import timer
 
-
-
 def read_input():
     """Reads inputs to make the pipeline with default values if none are provided."""
     use_defaults = input("Use defaults? (y/n, default y): ") or 'y'

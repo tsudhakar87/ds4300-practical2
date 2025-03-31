@@ -11,7 +11,7 @@ DISTANCE_METRIC = "COSINE"
 class RedisInstantiator(Embedder):
     def __init__(self):
         super().__init__()
-        self.client = redis.Redis(host="localhost", port=6379, db=0)
+        self.client = redis.Redis(host="localhost", port=6380, db=0)
         
     # change embedding model
     def change_embedding_model(self, new_model):

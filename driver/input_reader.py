@@ -1,120 +1,72 @@
-from embedding_db_setup.embedder import Embedder
-from embedding_db_setup.redis_instantiator import RedisInstantiator
-from embedding_db_setup.chroma_instantiator import ChromaInstantiator
-from embedding_db_setup.milvus_instantiator import MilvusInstantiator
-from text_preprocessing.preprocessor import Preprocessor
-from timer.timer import timer
-from memory_profiler import profile
+import csv
+import os
+import time
+import tracemalloc
+from memory_profiler import memory_usage
+from driver.old_input_reader import create_pipeline, main
 
+def log_results(filename, headers, data):
+    filepath = os.path.join("results", filename)
+    file_exists = os.path.isfile(filepath)
+    
+    with open(filepath, mode='a', newline='') as file:
+        writer = csv.writer(file)
+        if not file_exists:
+            writer.writerow(headers)
+        writer.writerow(data)
 
-def read_input():
-    """Reads inputs to make the pipeline with default values if none are provided."""
-    use_defaults = input("Use defaults? (y/n, default y): ") or 'y'
-
-    if use_defaults.lower() == 'y':
-        chunk_size = 300
-        overlap = 50
-        text_prep = 'all'
-        embedding_model = 'sentence-transformers/all-MiniLM-L6-v2'
-        database = 'redis'
-        local_llm = 'mistral'
-        print("Using default settings.")
-    else:
-        chunk_size = int(input("Enter chunk size (default 300): ") or 300)
-        overlap = int(input("Enter overlap size (default 50): ") or 50)
-        text_prep = input("Enter text prep strategy ('whitespace removal', 'punctuation removal', 'all', default all): ") or 'all'
-        embedding_model = input("Enter embedding model (default sentence-transformers/all-MiniLM-L6-v2): ") or 'sentence-transformers/all-MiniLM-L6-v2'
-        database = input("Enter database (default Redis): ") or 'Redis'
-        local_llm = input("Enter local LLM (default mistral): ") or 'mistral'
-
-    print(f"Chunk size: {chunk_size}, Overlap: {overlap}, Text prep: {text_prep}, Model: {embedding_model}, DB: {database}, LLM: {local_llm}")
-
-    return chunk_size, overlap, text_prep, embedding_model, database, local_llm
-
-def process_and_store(preprocessor, redis_instance: Embedder):
-    print("Processing PDFs and storing embeddings...")
-
-    all_chunks = preprocessor.process_pdfs()
-
-    for file_name, page_num, chunk_index, chunk in all_chunks:
-        print(f"Storing Chunk {chunk_index+1} from {file_name}, Page {page_num}")
-        embedding = redis_instance.get_embedding(chunk)
-        redis_instance.store_embedding(file_name, page_num, chunk, embedding)
-
-@profile
-@timer
-def create_pipeline():
-    chunk_size, overlap, text_prep, embedding_model, database, local_llm = read_input()
-
-    # Initialize Preprocessor
-    preprocessor = Preprocessor(data_dir="./class_materials/slides/", chunk_size=chunk_size, overlap=overlap, text_prep=text_prep)
-    print(f"Preprocessor initialized with text prep strategy: {text_prep}")
-
-    if database.lower() == 'redis':
-        print("Using Redis database.")
-        redis_instance = RedisInstantiator()
-        redis_instance.change_embedding_model(embedding_model)
-        redis_instance.create_hnsw_index()
-
-        print("Database and model initialized.")
-        
-        # Process PDFs and store embeddings
-        process_and_store(preprocessor, redis_instance)
-        
-        generate_responses(redis_instance, local_llm)
-
-    elif database.lower() == 'chroma':
-        print("Using Chroma database.")
-        chroma_instance = ChromaInstantiator()
-        chroma_instance.change_embedding_model(embedding_model)
-
-        print("Database and model initialized.")
-
-        # Process PDFs and store embeddings
-        process_and_store(preprocessor, chroma_instance)
-
-        generate_responses(chroma_instance, local_llm)
-
-    elif database.lower() == 'milvus':
-        print("Using Chroma database.")
-        chroma_instance = MilvusInstantiator()
-        chroma_instance.change_embedding_model(embedding_model)
-
-        print("Database and model initialized.")
-
-        # Process PDFs and store embeddings
-        process_and_store(preprocessor, chroma_instance)
-
-        generate_responses(chroma_instance, local_llm)
-   
-    else:
-        print(f"Database {database} not supported yet.")
-
-@timer
-def generate_responses(instantiator: Embedder, llm_model: str):
-    print("Generating responses using LLM...")
-    instantiator.llm_model = llm_model
-
-
-    while True:
-        question = input("\nEnter your question (or type 'exit' to quit): ").strip()
-        if question.lower() == 'exit':
-            print("Exiting query mode.")
-            break
-        response = instantiator.chat_with_model(question)
-
-
-@timer
-def main():
-    input_str = int(input("What would you like to do? \n 1. Run a pipeline \n 2. Query the model \n"))
-
-    if input_str == 1:
-        create_pipeline()
-    elif input_str == 2:
-        pass
-    else:
-        print("Invalid option or Query model logic not implemented yet.")
-
+def run_experiments():
+    base_config = {
+        "chunk_size": 300,
+        "overlap": 50,
+        "text_prep": "all",
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "database": "redis",
+        "local_llm": "mistral"
+    }
+    
+    variations = {
+        "chunk_size": [200, 300, 400],
+        "overlap": [30, 50, 70],
+        "text_prep": ["none", "whitespace removal", "punctuation removal", "all"],
+        "embedding_model": ["sentence-transformers/all-MiniLM-L6-v2", "sentence-transformers/all-mpnet-base-v2", "InstructorXL"],
+        "database": ["redis", "chroma", "milvus"],
+        "local_llm": ["mistral", "llama"]
+    }
+    
+    for param, values in variations.items():
+        for value in values:
+            config = {**base_config, param: value}
+            print(f"Running experiment: {param} = {value}")
+            tracemalloc.start()
+            mem_before = memory_usage()[0]
+            start_time = time.time()
+            
+            create_pipeline(
+                chunk_size=config["chunk_size"],
+                overlap=config["overlap"],
+                text_prep=config["text_prep"],
+                embedding_model=config["embedding_model"],
+                database=config["database"],
+                local_llm=config["local_llm"]
+            )
+            
+            total_time = time.time() - start_time
+            total_mem = memory_usage()[0] - mem_before
+            peak_mem = tracemalloc.get_traced_memory()[1] / 1024 / 1024  # Convert to MB
+            tracemalloc.stop()
+            
+            result_data = [param, value, total_time, total_mem, peak_mem]
+            log_results("all_pipelines.csv", ["Parameter", "Value", "Time (s)", "Memory (MB)", "Peak Memory (MB)"], result_data)
+            log_results(f"{param}.csv", ["Value", "Time (s)", "Memory (MB)", "Peak Memory (MB)"], result_data[1:])
 
 if __name__ == "__main__":
-    main()
+    choice = input("What would you like to do?\n1. Run a pipeline\n2. Query the model\n3. Run experiments\n")
+    if choice == "1":
+        create_pipeline()
+    elif choice == "2":
+        main()
+    elif choice == "3":
+        run_experiments()
+    else:
+        print("Invalid choice.")

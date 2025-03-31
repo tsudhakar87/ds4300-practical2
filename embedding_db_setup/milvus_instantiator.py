@@ -1,5 +1,5 @@
 from pymilvus import connections, FieldSchema, CollectionSchema, DataType, Collection
-from embedder import Embedder
+from embedding_db_setup.embedder import Embedder
 
 class MilvusInstantiator(Embedder):
     def __init__(self, collection_name="class-materials"):

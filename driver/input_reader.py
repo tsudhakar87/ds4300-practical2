@@ -1,8 +1,11 @@
 from embedding_db_setup.embedder import Embedder
 from embedding_db_setup.redis_instantiator import RedisInstantiator
 from embedding_db_setup.chroma_instantiator import ChromaInstantiator
+from embedding_db_setup.milvus_instantiator import MilvusInstantiator
 from text_preprocessing.preprocessor import Preprocessor
 from timer.timer import timer
+from memory_profiler import profile
+
 
 def read_input():
     """Reads inputs to make the pipeline with default values if none are provided."""
@@ -13,7 +16,7 @@ def read_input():
         overlap = 50
         text_prep = 'all'
         embedding_model = 'sentence-transformers/all-MiniLM-L6-v2'
-        database = 'Chroma'
+        database = 'redis'
         local_llm = 'mistral'
         print("Using default settings.")
     else:
@@ -38,6 +41,8 @@ def process_and_store(preprocessor, redis_instance: Embedder):
         embedding = redis_instance.get_embedding(chunk)
         redis_instance.store_embedding(file_name, page_num, chunk, embedding)
 
+@profile
+@timer
 def create_pipeline():
     chunk_size, overlap, text_prep, embedding_model, database, local_llm = read_input()
 
@@ -69,6 +74,19 @@ def create_pipeline():
         process_and_store(preprocessor, chroma_instance)
 
         generate_responses(chroma_instance, local_llm)
+
+    elif database.lower() == 'milvus':
+        print("Using Chroma database.")
+        chroma_instance = MilvusInstantiator()
+        chroma_instance.change_embedding_model(embedding_model)
+
+        print("Database and model initialized.")
+
+        # Process PDFs and store embeddings
+        process_and_store(preprocessor, chroma_instance)
+
+        generate_responses(chroma_instance, local_llm)
+   
     else:
         print(f"Database {database} not supported yet.")
 

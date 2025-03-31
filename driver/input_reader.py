@@ -1,6 +1,8 @@
 from embedding_db_setup.embedder import Embedder
 from embedding_db_setup.redis_instantiator import RedisInstantiator
+from embedding_db_setup.chroma_instantiator import ChromaInstantiator
 from text_preprocessing.preprocessor import Preprocessor
+from timer.timer import timer
 
 
 
@@ -13,7 +15,7 @@ def read_input():
         overlap = 50
         text_prep = 'all'
         embedding_model = 'sentence-transformers/all-MiniLM-L6-v2'
-        database = 'Redis'
+        database = 'Chroma'
         local_llm = 'mistral'
         print("Using default settings.")
     else:
@@ -57,10 +59,23 @@ def create_pipeline():
         process_and_store(preprocessor, redis_instance)
         
         generate_responses(redis_instance, local_llm)
+
+    elif database.lower() == 'chroma':
+        print("Using Chroma database.")
+        chroma_instance = ChromaInstantiator()
+        chroma_instance.change_embedding_model(embedding_model)
+
+        print("Database and model initialized.")
+
+        # Process PDFs and store embeddings
+        process_and_store(preprocessor, chroma_instance)
+
+        generate_responses(chroma_instance, local_llm)
     else:
         print(f"Database {database} not supported yet.")
 
-def generate_responses(instantiator: Embedder, llm_model):
+@timer
+def generate_responses(instantiator: Embedder, llm_model: str):
     print("Generating responses using LLM...")
     instantiator.llm_model = llm_model
 
@@ -73,6 +88,7 @@ def generate_responses(instantiator: Embedder, llm_model):
         response = instantiator.chat_with_model(question)
 
 
+@timer
 def main():
     input_str = int(input("What would you like to do? \n 1. Run a pipeline \n 2. Query the model \n"))
 
@@ -82,6 +98,7 @@ def main():
         pass
     else:
         print("Invalid option or Query model logic not implemented yet.")
+
 
 if __name__ == "__main__":
     main()

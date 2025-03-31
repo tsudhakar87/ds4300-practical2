@@ -7,6 +7,7 @@ import nltk
 from nltk.corpus import stopwords
 from PyPDF2 import PdfReader
 
+
 class Preprocessor:
     def __init__(self, data_dir, chunk_size=300, overlap=50, text_prep='all'):
         self.data_dir = data_dir

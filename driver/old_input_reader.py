@@ -16,7 +16,7 @@ def read_input():
         overlap = 50
         text_prep = 'all'
         embedding_model = 'sentence-transformers/all-MiniLM-L6-v2'
-        database = 'redis'
+        database = 'milvus'
         local_llm = 'mistral'
         print("Using default settings.")
     else:

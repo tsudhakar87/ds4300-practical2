@@ -1,2 +1,9 @@
-Time (s),Memory (MB),Peak Memory (MB)
-159.52038621902466,-400.9375,17.972631454467773
+
+300,50,all,sentence-transformers/all-MiniLM-L6-v2,redis,mistral,279.628258228302,-497.875,17.946409225463867
+
+300,50,all,sentence-transformers/all-MiniLM-L6-v2,redis,mistral,170.50763511657715,-425.125,17.946770668029785
+
+300,50,all,sentence-transformers/all-MiniLM-L6-v2,redis,mistral,449.0854289531708,-388.53125,17.946938514709473
+
+400,50,all,sentence-transformers/all-MiniLM-L6-v2,redis,mistral,298.020555973053,-464.609375,17.94695472717285
+

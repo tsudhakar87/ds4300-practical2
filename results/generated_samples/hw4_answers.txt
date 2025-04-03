@@ -27,7 +27,7 @@ Question 3: Add 23 to the AVL Tree below.  What imbalance case is created with i
 	      /  \
 	   25  35
 	   /
-            20	
+      20	
 
 
 

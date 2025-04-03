@@ -21,12 +21,12 @@ def log_results(filename, headers, data, write_header=False):
 # Function to run experiments (existing logic for pipeline, memory, etc.)
 def run_experiments():
     base_config = {
-        "chunk_size": 300,
+        "chunk_size": 400,
         "overlap": 50,
         "text_prep": "all",
         "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
         "database": "redis",
-        "local_llm": "mistral"
+        "local_llm": "llama"
     }
     
     available_params = list(base_config.keys())

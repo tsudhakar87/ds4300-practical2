@@ -17,7 +17,7 @@ def read_input():
         text_prep = 'all'
         embedding_model = 'sentence-transformers/all-MiniLM-L6-v2'
         database = 'milvus'
-        local_llm = 'mistral'
+        local_llm = 'llama'
         print("Using default settings.")
     else:
         chunk_size = int(input("Enter chunk size (default 300): ") or 300)
@@ -43,7 +43,7 @@ def process_and_store(preprocessor, redis_instance: Embedder):
 
 @profile
 @timer
-def create_pipeline(chunk_size=300, overlap=50, text_prep='all', embedding_model='sentence-transformers/all-MiniLM-L6-v2', database='redis', local_llm='mistral'):
+def create_pipeline(chunk_size=300, overlap=50, text_prep='all', embedding_model='sentence-transformers/all-MiniLM-L6-v2', database='redis', local_llm='llama'):
     """Creates the pipeline with given parameters."""
     
     # Initialize Preprocessor

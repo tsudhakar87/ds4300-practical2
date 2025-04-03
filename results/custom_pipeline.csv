@@ -70,3 +70,8 @@
 
 400,50,all,sentence-transformers/all-MiniLM-L6-v2,mongo,llama,293.94084787368774,-479.90625,19.33720111846924
 
+400,50,all,sentence-transformers/all-mpnet-base-v2,mongo,llama,282.4210591316223,-380.71875,19.808587074279785
+
+400,50,all,sentence-transformers/all-MiniLM-L6-v2,mongo,mistral,305.36615920066833,-486.171875,19.33742046356201
+
+400,50,all,sentence-transformers/all-mpnet-base-v2,mongo,mistral,256.0030379295349,-488.140625,19.80965518951416

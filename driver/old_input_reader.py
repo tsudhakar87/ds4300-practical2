@@ -17,7 +17,7 @@ def read_input():
         text_prep = 'all'
         embedding_model = 'sentence-transformers/all-MiniLM-L6-v2'
         database = 'mongo'
-        local_llm = 'llama'
+        local_llm = 'mistral'
         print("Using default settings.")
     else:
         chunk_size = int(input("Enter chunk size (default 300): ") or 300)

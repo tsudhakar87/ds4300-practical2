@@ -26,7 +26,7 @@ def run_experiments():
         "text_prep": "all",
         "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
         "database": "redis",
-        "local_llm": "llama"
+        "local_llm": "mistral"
     }
     
     available_params = list(base_config.keys())

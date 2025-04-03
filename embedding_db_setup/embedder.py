@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 
 class Embedder(ABC):
     embedding_model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2') # default
-    llm_model = "llama2" # default
+    llm_model = "mistral:7b" # default
 
     @classmethod
     def change_embedding_model(cls, new_model: str):

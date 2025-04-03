@@ -76,7 +76,7 @@ def create_pipeline(chunk_size=300, overlap=50, text_prep='all', embedding_model
         generate_responses(chroma_instance, local_llm)
 
     elif database.lower() == 'mongo':
-        print("Using Milvus database.")
+        print("Using mongo database.")
         mongo_instance = MongoInstantiator()
         mongo_instance.change_embedding_model(embedding_model)
 

@@ -49,3 +49,8 @@
 400,50,all,sentence-transformers/all-mpnet-base-v2,,llama,1.6337437629699707,1.140625,1.3035345077514648
 
 400,50,all,sentence-transformers/all-mpnet-base-v2,chroma,llama,307.84705996513367,-542.703125,.525463104248
+
+400,50,all,sentence-transformers/all-MiniLM-L6-v2,mongo,llama,1.6463420391082764,1.8125,1.412032127380371
+
+
+

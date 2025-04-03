@@ -1,7 +1,7 @@
 from embedding_db_setup.embedder import Embedder
 from embedding_db_setup.redis_instantiator import RedisInstantiator
 from embedding_db_setup.chroma_instantiator import ChromaInstantiator
-from embedding_db_setup.milvus_instantiator import MilvusInstantiator
+from embedding_db_setup.mongo_instantiator import MongoInstantiator
 from text_preprocessing.preprocessor import Preprocessor
 from timer.timer import timer
 from memory_profiler import profile
@@ -16,7 +16,7 @@ def read_input():
         overlap = 50
         text_prep = 'all'
         embedding_model = 'sentence-transformers/all-MiniLM-L6-v2'
-        database = 'milvus'
+        database = 'mongo'
         local_llm = 'llama'
         print("Using default settings.")
     else:
@@ -75,17 +75,17 @@ def create_pipeline(chunk_size=300, overlap=50, text_prep='all', embedding_model
 
         generate_responses(chroma_instance, local_llm)
 
-    elif database.lower() == 'milvus':
+    elif database.lower() == 'mongo':
         print("Using Milvus database.")
-        milvus_instance = MilvusInstantiator()
-        milvus_instance.change_embedding_model(embedding_model)
+        mongo_instance = MongoInstantiator()
+        mongo_instance.change_embedding_model(embedding_model)
 
         print("Database and model initialized.")
 
         # Process PDFs and store embeddings
-        process_and_store(preprocessor, milvus_instance)
+        process_and_store(preprocessor, mongo_instance)
 
-        generate_responses(milvus_instance, local_llm)
+        generate_responses(mongo_instance, local_llm)
    
     else:
         print(f"Database {database} not supported yet.")
